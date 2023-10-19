@@ -82,14 +82,20 @@ class Game:
             while answer == '' or int(answer) < 1 or int(answer) > 4:
                 answer = input('Я же сказал 1-4: ')
             answer = int(answer)
-            if answers[answer-1][0] == '*':
+            if answers[answer - 1][0] == '*':
                 print(f'Поздравляю! Вы ответили верно! Получено {rewards[i]} очков')
                 player.addScore(rewards[i])
             elif i >= player.getCheckpoint() - 1:
-                print(f'Вы дали неверный ответ, но дошли до несгараемой суммы, вы забираете {sum(rewards[:player.getCheckpoint()])} деняк')
+                print(
+                    f'Вы дали неверный ответ, но дошли до несгараемой суммы, вы забираете {sum(rewards[:player.getCheckpoint()])} деняк')
                 break
             else:
                 print('Вы дали неверынй ответ и не дошли до несгараемой суммы, вы забираете 0 деняк')
                 break
         else:
             print(f'Поздравляю, вы верно ответили на все вопросы и забираете {sum(rewards)} деняк')
+
+
+if __name__ == '__main__':
+    unittest.main()
+    Game().start()
