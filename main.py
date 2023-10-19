@@ -1,3 +1,26 @@
+import unittest
+
+
+class TestGame(unittest.TestCase):
+    def test1(self):
+        player = Player('Миша', 3)
+        self.assertEqual(player.getName(), 'Миша')
+
+    def test2(self):
+        player = Player('Макс', 2)
+        player.addScore(200)
+        player.addScore(100)
+        self.assertEqual(player.getScore(), 300)
+
+    def test3(self):
+        player = Player('Антон', 10)
+        self.assertEqual(player.getCheckpoint(), 3)
+
+    def test4(self):
+        question = Question('Сколько цветов на флаге россии', ['1', '2', '*3', '4'])
+        self.assertEqual(question.getQuestion()[-1], '?')
+
+
 class Question:
     def __init__(self, question, answers):
         if question[-1] != '?':
@@ -16,7 +39,7 @@ class Player:
     def __init__(self, name, checkpoint):
         self.name = name
         self.score = 0
-        if (checkpoint <= 0 or checkpoint >= 6):
+        if checkpoint <= 0 or checkpoint >= 6:
             self.checkpoint = 3
         else:
             self.checkpoint = checkpoint
@@ -38,11 +61,10 @@ class Game:
     def start(self):
         rewards = [100, 200, 300, 500]
 
-        questions = []
-        questions.append(Question('Какой сейчас год?', ['2000', '2020', '*2023', '2030']))
-        questions.append(Question('2 + 2 = _ ?', ['1', '2', '3', '*4']))
-        questions.append(Question('Кто первый полетел в космос?', ['*Гагарин', 'Михалков', 'Стивен Кинг', 'Ди Каприо']))
-        questions.append(Question('Какого цвета трава?', ['Синяя', 'Красная', 'Черная', '*Зеленая']))
+        questions = [Question('Какой сейчас год?', ['2000', '2020', '*2023', '2030']),
+                     Question('2 + 2 = _ ?', ['1', '2', '3', '*4']),
+                     Question('Кто первый полетел в космос?', ['*Гагарин', 'Михалков', 'Стивен Кинг', 'Ди Каприо']),
+                     Question('Какого цвета трава?', ['Синяя', 'Красная', 'Черная', '*Зеленая'])]
 
         player = Player('Дима', 6)
 
@@ -57,7 +79,7 @@ class Game:
                 else:
                     print(f'{j}. {answers[j - 1]}')
             answer = input('Введите вариант ответа (1-4): ')
-            while (answer == '' or int(answer) < 1 or int(answer) > 4):
+            while answer == '' or int(answer) < 1 or int(answer) > 4:
                 answer = input('Я же сказал 1-4: ')
             answer = int(answer)
             if answers[answer-1][0] == '*':
